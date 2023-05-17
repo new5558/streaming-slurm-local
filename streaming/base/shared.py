@@ -327,7 +327,7 @@ def get_shm_prefix(my_locals: List[str], world: World) -> Tuple[str, SharedMemor
         # Local leader walks the existing shm prefixes starting from zero, verifying that there is
         # no local working directory overlap.  When attaching to an existing shm fails, we have
         # reached the end of the existing shms.
-        for prefix_int in range((1+world.rank) * 10**3, 10**6):
+        for prefix_int in range((1+world.node) * 10**3, 10**6):
             prefix = f'{prefix_int:06}'
             name = f'{prefix}_locals'
             try:
@@ -358,7 +358,7 @@ def get_shm_prefix(my_locals: List[str], world: World) -> Tuple[str, SharedMemor
 
     # Non-local leaders go next, searching for match.
     if not world.is_local_leader:
-        for prefix_int in range((world.rank +1) * 10**3, 10**6):
+        for prefix_int in range((world.node +1) * 10**3, 10**6):
             prefix = f'{prefix_int:06}'
             name = f'{prefix}_locals'
             try:
