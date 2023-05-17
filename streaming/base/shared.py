@@ -374,5 +374,7 @@ def get_shm_prefix(my_locals: List[str], world: World) -> Tuple[str, SharedMemor
         dist.barrier()
     if destroy_dist:
         dist.destroy_process_group()
+    
+    print(prefix, 'prefix', world.rank, world.num_ranks, 'rank', world.node, world.num_nodes, 'mpde', world.num_ranks, world.ranks_per_node)
 
     return prefix, shm  # pyright: ignore
